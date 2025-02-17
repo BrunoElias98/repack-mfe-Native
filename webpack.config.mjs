@@ -60,6 +60,7 @@ export default (env) => {
   return {
     mode,
     context,
+    devtool: false,
     entry,
     resolve: {
       ...Repack.getResolveOptions(platform), // Adicionar platform aqui
@@ -78,6 +79,7 @@ export default (env) => {
     },
     optimization: {
       /** Configure minimizer to process the bundle. */
+      sideEffects: false,
       minimizer: [
         new TerserPlugin({
           test: /\.(js)?bundle(\?.*)?$/i,
@@ -107,28 +109,6 @@ export default (env) => {
       rules: [
         {
           test: /\.[cm]?[jt]sx?$/,
-          include: [
-            /node_modules(.*[/\\])+react-native/,
-            /node_modules(.*[/\\])+@react-native/,
-            /node_modules(.*[/\\])+@react-navigation/,
-            /node_modules(.*[/\\])+@react-native-community/,
-            /node_modules(.*[/\\])+expo/,
-            /node_modules(.*[/\\])+pretty-format/,
-            /node_modules(.*[/\\])+metro/,
-            /node_modules(.*[/\\])+abort-controller/,
-            /node_modules(.*[/\\])+@callstack[/\\]repack/,
-          ],
-          use: 'babel-loader',
-        },
-        /**
-         * Here you can adjust loader that will process your files.
-         *
-         * You can also enable persistent caching with `cacheDirectory` - please refer to:
-         * https://github.com/babel/babel-loader#options
-         */
-        {
-          test: /\.[jt]sx?$/,
-          exclude: /node_modules/,
           use: 'babel-loader',
         },
         {
@@ -143,6 +123,7 @@ export default (env) => {
           },
         },
       ],
+      noParse: /\/native-require.js$/,
     },
     plugins: [
       /**
@@ -166,23 +147,28 @@ export default (env) => {
         },
       }),
 
-      new Repack.plugins.ModuleFederationPluginV2({ // Mudando para V2
+      new Repack.plugins.ModuleFederationPluginV2({
         name: 'Cart2',
         filename: 'Cart2.container.js.bundle',
-        // dts: false,
+        dts: false,
         exposes: {
           './App': './App',
+          './store': './store', // Expor a store
+          './hooks/useQuery': './hooks/useQuery', // Expor o hook useQuery
         },
-        shared: Object.fromEntries(
-          Object.entries(pkg.dependencies).map(([dep, version]) => {
-            console.log(dep, version);
-            console.log(pkg.dependencies);
-            return [
-              dep,
-              {singleton: true, eager: true, requiredVersion: version},
-            ];
-          }),
-        ),
+        shared: {
+          react: {
+            singleton: true,
+            eager: true,
+            requiredVersion: pkg.dependencies.react,
+          },
+          'react-native': {
+            singleton: true,
+            eager: true,
+            requiredVersion: pkg.dependencies['react-native'],
+          },
+          zustand: { singleton: true, eager: true, requiredVersion: pkg.dependencies.zustand },
+        },
       }),
     ],
   };
