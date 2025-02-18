@@ -153,8 +153,9 @@ export default (env) => {
         dts: false,
         exposes: {
           './App': './App',
-          './store': './store', // Expor a store
-          './hooks/useQuery': './hooks/useQuery', // Expor o hook useQuery
+          './store': './store',
+          './AuthProvider': './src/providers/AuthProvider',
+          './hooks/useQuery': './hooks/useQuery',
         },
         shared: {
           react: {

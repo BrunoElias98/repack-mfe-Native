@@ -10,4 +10,4 @@ const useStore = create<StoreState>((set) => ({
   increment: () => set((state) => ({ count: state.count + 1 })),
 }));
 
-export { useStore }; // <-- Alterado para named export
+export { useStore };
