@@ -2,8 +2,8 @@ import React from 'react';
 import {Text, View, Button, DeviceEventEmitter} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {useStore} from './store';
-import { styles } from './app.styles';
+import {useStore} from './src/core/store';
+import {styles} from './app.styles';
 
 interface CartProps {
   onCountChange?: (newCount: number) => void;

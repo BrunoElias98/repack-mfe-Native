@@ -1,0 +1,5 @@
+{
+  "preset": "react-native",
+  "testMatch": ["**/?(*.)+(e2e).[jt]s?(x)"],
+  "testTimeout": 120000
+}
