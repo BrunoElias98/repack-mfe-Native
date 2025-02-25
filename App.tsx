@@ -1,7 +1,9 @@
 import React from 'react';
-import {Text, View, Button, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {Text, View, Button, DeviceEventEmitter} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {useStore} from './store';
+import { styles } from './app.styles';
 
 interface CartProps {
   onCountChange?: (newCount: number) => void;
@@ -31,6 +33,7 @@ const App = ({onCountChange}: CartProps) => {
   const handleClearStorage = async () => {
     try {
       await AsyncStorage.removeItem('@shared_storage');
+
       DeviceEventEmitter.emit('storage_updated');
     } catch (error) {
       console.error('Erro ao limpar storage:', error);
@@ -40,19 +43,11 @@ const App = ({onCountChange}: CartProps) => {
   return (
     <View style={styles.container}>
       <Text>Parcel Native App</Text>
-      <Button title="Increment" onPress={handleIncrement} />
+      <Button title="Incrementar" onPress={handleIncrement} />
       <Button title="Salvar no Storage" onPress={handleSaveToStorage} />
       <Button title="Limpar Storage" onPress={handleClearStorage} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

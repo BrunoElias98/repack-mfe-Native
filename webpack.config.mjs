@@ -33,9 +33,9 @@ export default (env) => {
     sourceMapFilename = undefined,
     assetsPath = undefined,
     reactNativePath = resolve('react-native'),
-    devServer = {              // Configurar devServer com valores padrão
+    devServer = {
       port: 8081,
-      hot: true, // Desabilitar HMR
+      hot: false,
     },
   } = env;
 
@@ -52,6 +52,7 @@ export default (env) => {
    * in development mode by Babel.
    */
   process.env.BABEL_ENV = mode;
+
   console.log('Packages >>>>> ', pkg)
   console.log('dirname >>>> ', dirname);
   console.log('platform >>>> ', platform, path.join(dirname, 'build/generated', platform));
@@ -63,7 +64,7 @@ export default (env) => {
     devtool: false,
     entry,
     resolve: {
-      ...Repack.getResolveOptions(platform), // Adicionar platform aqui
+      ...Repack.getResolveOptions(platform),
       alias: {
         'react-native': reactNativePath,
       },
@@ -79,7 +80,6 @@ export default (env) => {
     },
     optimization: {
       /** Configure minimizer to process the bundle. */
-      sideEffects: false,
       minimizer: [
         new TerserPlugin({
           test: /\.(js)?bundle(\?.*)?$/i,
