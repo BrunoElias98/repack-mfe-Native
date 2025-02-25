@@ -8,4 +8,4 @@ const AuthContext = React.createContext({
 
 const useAuth = () => React.useContext(AuthContext);
 
-export {useAuth, AuthContext};
+export { useAuth, AuthContext };

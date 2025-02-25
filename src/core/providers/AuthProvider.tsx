@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {AuthContext} from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 enum ActionTypes {
   RESTORE_TOKEN = 'RESTORE_TOKEN',
@@ -60,7 +60,7 @@ const AuthProvider = ({
           // Handle error
         }
 
-        dispatch({type: ActionTypes.SIGN_IN});
+        dispatch({ type: ActionTypes.SIGN_IN });
       },
       signOut: async () => {
         try {
@@ -69,7 +69,7 @@ const AuthProvider = ({
           // Handle error
         }
 
-        dispatch({type: ActionTypes.SIGN_OUT});
+        dispatch({ type: ActionTypes.SIGN_OUT });
       },
       signUp: async () => {
         try {
@@ -78,7 +78,7 @@ const AuthProvider = ({
           // Handle error
         }
 
-        dispatch({type: ActionTypes.SIGN_IN});
+        dispatch({ type: ActionTypes.SIGN_IN });
       },
     }),
     [],
@@ -94,7 +94,7 @@ const AuthProvider = ({
         // Handle error
       }
 
-      dispatch({type: ActionTypes.RESTORE_TOKEN, payload: !userToken});
+      dispatch({ type: ActionTypes.RESTORE_TOKEN, payload: !userToken });
     };
 
     restoreToken();

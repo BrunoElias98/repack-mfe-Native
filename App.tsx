@@ -1,16 +1,16 @@
 import React from 'react';
-import {Text, View, Button, DeviceEventEmitter} from 'react-native';
+import { Text, View, Button, DeviceEventEmitter } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {useStore} from './src/core/store';
-import {styles} from './app.styles';
+import { useStore } from './src/core/store';
+import { styles } from './app.styles';
 
 interface CartProps {
   onCountChange?: (newCount: number) => void;
 }
 
-const App = ({onCountChange}: CartProps) => {
-  const {count, increment} = useStore();
+const App = ({ onCountChange }: CartProps) => {
+  const { count, increment } = useStore();
 
   const handleIncrement = () => {
     increment();
@@ -21,7 +21,7 @@ const App = ({onCountChange}: CartProps) => {
     try {
       await AsyncStorage.setItem(
         '@shared_storage',
-        JSON.stringify({message: 'Valor salvo pela Cart2 (parcel)!'}),
+        JSON.stringify({ message: 'Valor salvo pela Cart2 (parcel)!' }),
       );
 
       DeviceEventEmitter.emit('storage_updated');
