@@ -41,9 +41,13 @@ const App = ({ onCountChange }: CartProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Parcel Native App</Text>
-      <Button title="Incrementar" onPress={handleIncrement} />
+    <View style={styles.container} testID="cart2">
+      <Text testID="title-text">Parcel Native App</Text>
+      <Button
+        title="Incrementar"
+        testID="increment-button"
+        onPress={handleIncrement}
+      />
       <Button title="Salvar no Storage" onPress={handleSaveToStorage} />
       <Button title="Limpar Storage" onPress={handleClearStorage} />
     </View>
